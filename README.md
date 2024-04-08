@@ -24,24 +24,24 @@ The application is hosted at [https://frontend-assignment-two-dun.vercel.app/met
 
   ```sh
   git clone https://github.com/mehta-preyansh/Frontend-Assignment.git
-   
+  ```
 2. Navigate to the project directory:
 
   ```sh
   cd your-repository
-
+  ```
 3. Install Dependencies
 
   ```sh
   npm install
-
+  ```
 ### Usage
 
 1. Start the development server
 
   ```sh
   npm run dev
-
+  ```
 2. Build for production
 
   ```sh
