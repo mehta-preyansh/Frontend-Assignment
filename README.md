@@ -1,6 +1,6 @@
-# Company Assignment App
+# Frontend Assignment (Truefoundary)
 
-This is a React application created for a company assignment. It utilizes React Router, React Chart.js 2, and Styled Components.
+This is a React application created for Truefoundary. It utilizes React Router, React Chart.js 2, and Styled Components.
 
 ## Live Demo
 
