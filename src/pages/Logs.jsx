@@ -1,25 +1,26 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { TimeContext } from "../App";
-import spinner from "../assets/Sidepane/Spinner.svg";
-import arrow from '../assets/Sidepane/arrow-up-long.png'
 import { MimicLogs } from "../api-mimic";
 import { Log } from "../components/Log";
+//------ASSETS-------
+import spinner from "../assets/Sidepane/Spinner.svg";
+import arrow from "../assets/Sidepane/arrow-up-long.png";
 
-export const Logs = () => {
-  //States for loading, scrolle to bottom, logs array, count of unseen logs
+//------COMPONENT--------
+export const Logs = ({ maxNumberOfLogs }) => {
+  //States for loading, scroll to bottom, logs array, count of unseen logs, and a history array of logs
+  const [historyLogs, sethistoryLogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [scrollToBottom, setScrollToBottom] = useState(true);
+  const [scrollToTop, setScrollToTop] = useState(false);
   const [logs, setLogs] = useState([]);
-  const [pendingLogs, setPendingLogs] = useState(0)
+  const [pendingLogs, setPendingLogs] = useState(0);
 
+  //Display selected interval
   const currentTime = new Date();
   const intervalMap = [5, 15, 30, 60, 3 * 60, 6 * 60];
-
-  //Global state to keep trak of the selected option in dropdown
   const [seletedInterval] = useContext(TimeContext);
-
-  const logListRef = useRef(null);
 
   //Function to be passed as callback to API
   const pushLogToArray = (log) => {
@@ -27,6 +28,7 @@ export const Logs = () => {
   };
 
   //Handling scrolling in the logs container
+  const logListRef = useRef(null);
   const handleScroll = () => {
     //-----Whether scrolled till bottom or not
     const isAtBottom =
@@ -34,15 +36,62 @@ export const Logs = () => {
         logListRef.current.scrollTop -
           (logListRef.current.scrollHeight - logListRef.current.clientHeight)
       ) < 4;
+    // if scroll-thumb is less than 4px closer to the bottom of container
+    //You have no pending logs to watch
+    if (isAtBottom) setPendingLogs(0);
     //-----Stick to bottom or not
     setScrollToBottom(isAtBottom);
-    if(isAtBottom){
-      setInitialLength(0)
-    }
-    if(!isAtBottom && pendingLogs==0){
-      setPendingLogs(1)
+
+    //-----Whether scrolled till top or not
+    const isAtTop = logListRef.current.scrollTop < 4;
+    if (isAtTop) {
+      setScrollToTop(true);
+      // fetchPreviousLogs();
     }
   };
+
+  //Fetch previous logs from the historyLogs array
+  const fetchPreviousLogs = () => {
+    console.log(historyLogs);
+    if (historyLogs.length >= maxNumberOfLogs) {
+      setLogs((prev) => [
+        ...historyLogs.slice(historyLogs.length - maxNumberOfLogs),
+        ...prev,
+      ]);
+      sethistoryLogs(
+        historyLogs.slice(0, historyLogs.length - maxNumberOfLogs - 1)
+        );
+      } else {
+        setLogs((prev) => [...historyLogs, ...prev]);
+        sethistoryLogs([]);
+      }
+      setLoading(false);
+    setScrollToTop(false);
+  };
+
+  //Scroll to the bottom when the state changes and keep only certain logs in the screen
+  useEffect(() => {
+    if (logListRef.current && scrollToBottom) {
+      logListRef.current.scrollTop =
+        logListRef.current.scrollHeight - logListRef.current.clientHeight;
+    }
+    if (logs.length > maxNumberOfLogs && scrollToBottom) {
+      sethistoryLogs((prev) => [
+        ...prev,
+        ...logs.slice(0, logs.length - maxNumberOfLogs),
+      ]);
+      setLogs((prevLogs) => prevLogs.slice(logs.length - maxNumberOfLogs));
+    }
+    if (!scrollToBottom && pendingLogs == 0) {
+      setPendingLogs(logs.length);
+    }
+    if (scrollToTop) {
+      setLoading(true)
+      setTimeout(()=>{
+        fetchPreviousLogs();
+      },1000)
+    }
+  }, [logs, scrollToBottom, scrollToTop]);
 
   //Subscribing to live logs and scroll event listener
   useEffect(() => {
@@ -53,17 +102,6 @@ export const Logs = () => {
       flush();
     };
   }, []);
-
-  //Scroll to the bottom when the state changes and keep only certain logs in the screen
-  useEffect(() => {
-    if (logListRef.current && scrollToBottom) {
-      logListRef.current.scrollTop =
-        logListRef.current.scrollHeight - logListRef.current.clientHeight;
-    }
-    if (logs.length > 15 && pendingLogs==0) {
-      setLogs((prevLogs) => prevLogs.slice(logs.length-15));
-    }
-  }, [logs, scrollToBottom]);
 
   return (
     <LogsContainer>
@@ -81,42 +119,39 @@ export const Logs = () => {
       <div className="log-wrapper">
         {loading ? (
           <div className="loader">
-            <img src={spinner} alt="" />
-            <span>Loading previous 100 logs</span>
+            {historyLogs.length ? <img src={spinner} alt="" /> : null}
+            <span>
+              {historyLogs.length
+                ? `Loading previous ${maxNumberOfLogs} logs`
+                : "No previous logs"}
+            </span>
           </div>
         ) : null}
         <div className="log-list" ref={logListRef}>
-          {loading
-            ? chunkLogs[chunkLogs.length - 1].map((log, index) => (
-                <Log
-                  timestamp={log.timestamp}
-                  message={log.message}
-                  code={log.code}
-                  key={log.timestamp}
-                ></Log>
-              ))
-            : logs.map((log, index) => {
-                return (
-                  <Log
-                    timestamp={log.timestamp}
-                    message={log.message}
-                    code={log.code}
-                    key={log.timestamp}
-                  ></Log>
-                );
-              })}
+          {logs.map((log, index) => {
+            return (
+              <Log
+                timestamp={log.timestamp}
+                message={log.message}
+                code={log.code}
+                key={log.timestamp}
+              ></Log>
+            );
+          })}
         </div>
         {scrollToBottom ? null : (
           <div
             className="scroll-btn"
             onClick={() => {
-              setScrollToBottom(true)
-              setInitialLength(0)
+              setPendingLogs(0);
+              setScrollToBottom(true);
             }}
           >
-            <span>
-            {pendingLogs} new logs 
-            </span>
+            <span>{`${
+              logs.length - pendingLogs < 100
+                ? logs.length - pendingLogs
+                : "100+"
+            } new logs`}</span>
             <img src={arrow} alt="" />
           </div>
         )}
@@ -184,20 +219,22 @@ const LogsContainer = styled.div`
     }
     .scroll-btn {
       position: absolute;
+      max-width: 90px;
       right: 0;
       bottom: 0;
       display: flex;
       align-items: center;
+      justify-content: space-around;
       gap: 4px;
       border-radius: 4px;
       margin: 18px;
       padding: 6px 8px;
-      background-color: #4338CA;
-      color: #E0ECFD;
+      background-color: #4338ca;
+      color: #e0ecfd;
       font-size: 10px;
       font-weight: 500;
       font-family: "Work Sans";
-      img{
+      img {
         height: 14px;
       }
       cursor: pointer;

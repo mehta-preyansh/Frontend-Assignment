@@ -3,6 +3,8 @@ body{
   padding: 0;
 }
 *::-webkit-scrollbar {
+  /* Custom display */
+  display: none;
   width: 6px; 
 }
 *::-webkit-scrollbar-thumb {

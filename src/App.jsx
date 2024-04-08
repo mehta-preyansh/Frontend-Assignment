@@ -13,7 +13,7 @@ function App() {
       <TimeContext.Provider value={[selectedInterval, setSelectedInterval]}>
         <Header />
         <Routes>
-          <Route path="logs" element={<Logs />}></Route>
+          <Route path="logs" element={<Logs maxNumberOfLogs={100}/>}></Route>
           <Route path="metrics" index element={<Metrics />}></Route>
           {/* <Route path='storybook' element={}></Route> */}
         </Routes>
