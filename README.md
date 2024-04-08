@@ -8,18 +8,13 @@ The application is hosted at [https://frontend-assignment-two-dun.vercel.app/met
 
 ## Screenshots
 
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/6df25eb0-a347-499b-9e3b-dbd03397e969)
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/da1c31c6-6810-449e-97bc-955d296d71ca)
 
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/6699e766-1ed6-4dbe-aee3-dc895a48fd3c)
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/68906a5a-7c95-46ce-948d-01b8eed438d1)
 
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/20c7960c-3a19-49a6-b3b4-de78e4de0df6)
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/1ec1db99-4c96-4919-820d-ae7c332afd14)
 
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/06f4b70d-4f79-40b6-9329-bf696a14f46c)
-
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/bf281f1c-8403-456d-ad9e-d809fa8d25f6)
-
-![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/f294247f-f47d-40f9-b016-b4dabcf9d431)
-
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/62b3d0fa-a7ff-499d-97e9-591185477913)
 
 ## Getting Started
 
