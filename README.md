@@ -4,7 +4,7 @@ This is a React application created for Truefoundary. It utilizes React Router, 
 
 ## Live Demo
 
-The application is hosted at [https://frontend-assignment-two-dun.vercel.app/metrics](https://frontend-assignment-two-dun.vercel.app/metrics).
+The application is hosted at [https://frontend-assignment-two-dun.vercel.app/](https://frontend-assignment-two-dun.vercel.app/).
 
 ## Screenshots
 
