@@ -8,8 +8,18 @@ The application is hosted at [https://frontend-assignment-two-dun.vercel.app/met
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/6df25eb0-a347-499b-9e3b-dbd03397e969)
+
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/6699e766-1ed6-4dbe-aee3-dc895a48fd3c)
+
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/20c7960c-3a19-49a6-b3b4-de78e4de0df6)
+
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/06f4b70d-4f79-40b6-9329-bf696a14f46c)
+
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/bf281f1c-8403-456d-ad9e-d809fa8d25f6)
+
+![image](https://github.com/mehta-preyansh/Frontend-Assignment/assets/93971029/f294247f-f47d-40f9-b016-b4dabcf9d431)
+
 
 ## Getting Started
 
@@ -46,7 +56,7 @@ The application is hosted at [https://frontend-assignment-two-dun.vercel.app/met
 
   ```sh
   npm run build
-
+  ```
 
 
 
